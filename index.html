@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.5/angular.min.js"></script>
+  <script src="script.js"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="styles.css" rel="stylesheet" type="text/css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shopping List</title>
+</head>
+<body ng-controller="ctrl">
+  <h1>Shopping List</h1>
+  <p>This app is session-based, meaning no data or changes are permanently stored. Reloading this webpage clears everything back to the default.</p>
+  <h2>{{rows.length}} Item{{plural(rows)}} <span ng-show="temp">?<small class="muted"><em > (only {{rows.length-1}} actually....)</em></small></span></h2>
+  <form class="form-horizontal">
+  <span ng-class="{'input-append':addItem}">
+    <input id="add" type="text" placeholder="Another one ?" ng-model="addItem" ng-change="addTemp()"/>
+    <input type="submit" class="btn btn-primary" ng-click="addRow()" ng-show="addItem" value="+ add"/>
+    </span>
+
+    <span class="search input-prepend" ng-class="{'input-append':search}">
+      <span class="add-on"><i class="icon-search"></i></span>
+  <input type="text" class="span2"  placeholder="Search" ng-model="search">
+    <button type="submit" class="btn btn-inverse" ng-click="search=''" ng-show="search" value="+ add"><i class="icon-remove icon-white"></i></button>
+</span>
+  </form>
+  <div class="clear margin10top">&nbsp;</div>
+  <table class="table table-striped">
+    <tr ng-repeat="row in rows | filter : search"  ng-class="{'muted':isTemp($index)}">
+      <td>{{$index+1}}</td>
+      <td>{{row}}</td>
+      <td>
+        <button class="btn btn-danger btn-mini" ng-click="deleteRow(row)" ng-hide="isTemp($index)"><i class="icon-trash icon-white"></i></button>
+      </td>
+    </tr>
+  </table>
+  <h3>Typical Items</h3>
+  
+  <div class="column left">
+    <h4>Food</h4>
+    
+    <div class="checkbox">
+    <label><input type="checkbox" id="add" ng-true-value="Milk" ng-model="addItem" ng-change="addTemp()">Milk</label>
+    <label><input type="checkbox" id="add" ng-true-value="Eggs" ng-model="addItem" ng-change="addTemp()">Eggs</label>
+    <label><input type="checkbox" id="add" ng-true-value="Tub Butter" ng-model="addItem" ng-change="addTemp()">Tub Butter</label>
+    <label><input type="checkbox" id="add" ng-true-value="Stick Butter" ng-model="addItem" ng-change="addTemp()">Stick Butter</label>
+    <label><input type="checkbox" id="add" ng-true-value="Apples" ng-model="addItem" ng-change="addTemp()">Apples</label>
+    <label><input type="checkbox" id="add" ng-true-value="Bananas" ng-model="addItem" ng-change="addTemp()">Bananas</label>
+    <label><input type="checkbox" id="add" ng-true-value="Bread" ng-model="addItem" ng-change="addTemp()">Bread</label>
+    <label><input type="checkbox" id="add" ng-true-value="Peanut Butter" ng-model="addItem" ng-change="addTemp()">Peanut Butter</label>
+    <label><input type="checkbox" id="add" ng-true-value="Ground Beef" ng-model="addItem" ng-change="addTemp()">Ground Beef</label>
+    <label><input type="checkbox" id="add" ng-true-value="Chicken" ng-model="addItem" ng-change="addTemp()">Chicken</label>
+    <label><input type="checkbox" id="add" ng-true-value="Sour Cream" ng-model="addItem" ng-change="addTemp()">Sour Cream</label>
+    <label><input type="checkbox" id="add" ng-true-value="Chips" ng-model="addItem" ng-change="addTemp()">Chips</label>
+    <label><input type="checkbox" id="add" ng-true-value="Tea" ng-model="addItem" ng-change="addTemp()">Tea</label>
+    <label><input type="checkbox" id="add" ng-true-value="Onions" ng-model="addItem" ng-change="addTemp()">Onions</label>
+    <label><input type="checkbox" id="add" ng-true-value="Red Onions" ng-model="addItem" ng-change="addTemp()">Red Onions</label>
+    <label><input type="checkbox" id="add" ng-true-value="Potatoes" ng-model="addItem" ng-change="addTemp()">Potatoes</label>
+    <label><input type="checkbox" id="add" ng-true-value="Donuts" ng-model="addItem" ng-change="addTemp()">Donuts</label>
+    <label><input type="checkbox" id="add" ng-true-value="Ding Dongs" ng-model="addItem" ng-change="addTemp()">Ding Dongs</label>
+    <label><input type="checkbox" id="add" ng-true-value="Cupcakes" ng-model="addItem" ng-change="addTemp()">Cupcakes</label>
+  </div>
+ </div>
+  
+  <div class="column right">
+    <h4>Non-Food</h4>
+    <div class="checkbox">
+      <label><input type="checkbox" id="add" ng-true-value="Toilet Paper" ng-model="addItem" ng-change="addTemp()">Toilet paper</label>
+      <label><input type="checkbox" id="add" ng-true-value="Paper Towels" ng-model="addItem" ng-change="addTemp()">Paper Towels</label>
+      <label><input type="checkbox" id="add" ng-true-value="Cleaning Wipes" ng-model="addItem" ng-change="addTemp()">Cleaning Wipes</label>
+      <label><input type="checkbox" id="add" ng-true-value="Carpet Cleaner" ng-model="addItem" ng-change="addTemp()">Carpet Cleaner</label>
+    <label><input type="checkbox" id="add" ng-true-value="Swiffer Pads" ng-model="addItem" ng-change="addTemp()">Swiffer Pads</label>
+    <label><input type="checkbox" id="add" ng-true-value="Swiffer Cleaner" ng-model="addItem" ng-change="addTemp()">Swiffer Cleaner</label>
+    <label><input type="checkbox" id="add" ng-true-value="Laundry Detergent" ng-model="addItem" ng-change="addTemp()">Laundry Detergent</label>
+    <label><input type="checkbox" id="add" ng-true-value="Chlorox2" ng-model="addItem" ng-change="addTemp()">Chlorox 2</label>
+    <label><input type="checkbox" id="add" ng-true-value="OxiClean" ng-model="addItem" ng-change="addTemp()">Oxi-Clean</label>
+    <label><input type="checkbox" id="add" ng-true-value="Dishwasher Detergent" ng-model="addItem" ng-change="addTemp()">Dishwasher Soap</label>
+    <label><input type="checkbox" id="add" ng-true-value="Dishwashing Soap" ng-model="addItem" ng-change="addTemp()">Dishwashing Soap</label>
+    <label><input type="checkbox" id="add" ng-true-value="Toothpaste" ng-model="addItem" ng-change="addTemp()">Toothpaste</label>
+    <label><input type="checkbox" id="add" ng-true-value="Shaving Cream" ng-model="addItem" ng-change="addTemp()">Shaving Cream</label>
+    <label><input type="checkbox" id="add" ng-true-value="Deodorant" ng-model="addItem" ng-change="addTemp()">Deodorant</label>
+    <label><input type="checkbox" id="add" ng-true-value="Laundry Detergent" ng-model="addItem" ng-change="addTemp()">Laundry Detergent</label>
+    <label><input type="checkbox" id="add" ng-true-value="Dryer Sheets" ng-model="addItem" ng-change="addTemp()">Dryer Sheets</label>
+    <label><input type="checkbox" id="add" ng-true-value="Pens" ng-model="addItem" ng-change="addTemp()">Pen(s)</label>
+      
+    <label><input type="checkbox" id="add" ng-true-value="Paper" ng-model="addItem" ng-change="addTemp()">Paper</label>
+  </div>
+ </div>
+  
+  <div class="clear"></div>
+  <h3>Store Specials</h3>
+  <iframe src="http://www.allyou.com/weekly-circulars#/featured" width="700" height="350">
+  </iframe>
+  
+  <p>
+    <a href="http://www.dierbergs.com/Specials/Weekly-Ad" target="_blank">Dierbergs Weekly Ad</a><br>
+    <a href="https://www.shopnsave.com/savings/view-ads.html" target="_blank">Shop N Save Weekly Ad</a><br>
+    <a href="http://weeklyads.aldi.us/Aldi/Entry/Index/?storeid=0&IsFromStoreSelection=y&CityStateZip=63368" target="_blank">Aldi's Weekly Ad</a><br>
+    <a href="https://www.schnucks.com/savingssalute/ad/" target="_blank">Schnuck's Weekly Ad</a><br>
+    
+    
+  
+</body>
+</html>

@@ -1,0 +1,40 @@
+body{
+  padding:20px;
+}
+.search{
+  margin-left:10px;
+}
+
+.column {
+  float: left;
+  position: relative;
+  width: 46%;
+}
+
+.column.left {
+  margin-right: 4%;
+}
+
+.clear {
+  clear: both;
+  font-size: 0;
+}
+
+.margin10top {
+	margin-top: 10px;
+}
+
+@media screen and (max-width : 500px){
+  
+  .form-horizontal span {
+    float: left;
+    margin-right: 10px;
+    width: 230px;
+  }
+  
+  input.span2, span.add-on {
+	  display: none !important;
+  }
+  
+}
+
